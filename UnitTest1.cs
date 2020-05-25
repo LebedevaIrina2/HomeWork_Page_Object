@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
-namespace WebDriverBasics
+namespace PageObjects
 {
     public class Tests
     {
@@ -16,7 +16,7 @@ namespace WebDriverBasics
         private WebDriverWait wait;
         private MainPage mainPage;
         private Login login;
-        private AllProducts allProducts;          
+        private AllProductsPage allProducts;          
         private NewProducts newProducts;
         private DeleteNewProduct deleteNewProduct;
 
@@ -77,20 +77,19 @@ namespace WebDriverBasics
             mainPage.LoginEnter(SelectLogin); // вызываем метод ввода логина
             login = mainPage.PasswordAndAutorization(SelectLogin); // вызываем метод ввода пароля и клика по кнопке "Отправить" и переходим на страницу Product editing
            
-            allProducts = new AllProducts(driver);
+            allProducts = new AllProductsPage(driver);
             newProducts = new NewProducts(driver);
                       
             // ЗАПОЛНЯЕМ КАРТОЧКУ ПРОДУКТА
             newProducts.CreateNewProductsName(SendKeysProductName);
-            Assert.AreEqual(CheckNameProductEditingPage, allProducts.CheckNamePage()); ; // Проверка загрузки нужной страницы "Product editing"
+            Assert.AreEqual(CheckNameProductEditingPage, newProducts.CheckProductEditingPage()); ; // Проверка загрузки нужной страницы "Product editing"
             newProducts.SelectNewCategoryId(SelectCategoryId);
             newProducts.SelectNewSupplierId(SelectSupplierId);
-            newProducts.CreateNewUnitPrice(SendKeysUnitPrice);
-            newProducts.CreateNewQuantityPerUnit(SendKeysQuantityPerUnit);
-            newProducts.CreateNewUnitsInStock(SendKeysUnitsInStock);
-            newProducts.CreateNewUnitsOnOrder(SendKeysUnitsOnOrder); // +отмечаем скидку и нажимаем кнопку "Отправить"
-            allProducts=newProducts.CreateNewReorderLevel(SendKeysReorderLevel); // + отмечаем скидку,нажимаем "отправить" и переходим на страницу AllProducts
-            
+            newProducts.SendKeyNewUnitPrice(SendKeysUnitPrice);
+            newProducts.SendKeyNewQuantityPerUnit(SendKeysQuantityPerUnit);
+            newProducts.SendKeyNewUnitsInStock(SendKeysUnitsInStock);
+            newProducts.SendKeyNewUnitsOnOrder(SendKeysUnitsOnOrder); // +отмечаем скидку и нажимаем кнопку "Отправить"
+            allProducts= newProducts.SendKeyNewReorderLevel(SendKeysReorderLevel); // + отмечаем скидку,нажимаем "отправить" и переходим на страницу AllProducts
         }
 
 
@@ -101,18 +100,18 @@ namespace WebDriverBasics
             mainPage.LoginEnter(SelectLogin); // вызываем метод ввода логина
             login = mainPage.PasswordAndAutorization(SelectLogin); // вызываем метод ввода пароля и клика по кнопке "Отправить" и переходим на страницу HomePage
 
-            allProducts = new AllProducts(driver);
+            allProducts = new AllProductsPage(driver);
 
             Assert.AreEqual(SendKeysProductName, allProducts.SelectProductName());
-            Assert.AreEqual(CheckNameAllProductsPage, allProducts.CheckNamePage()); // Проверка загрузки нужной страницы "All Products"
-            Assert.AreEqual(SelectCategoryId, allProducts.SelectCategoryID());
-            Assert.AreEqual(SelectSupplierId, allProducts.SelectSupplierID());
-            Assert.AreEqual(SendKeysQuantityPerUnit, allProducts.SelectQuantityPerUnit());
-            Assert.AreEqual(SendKeysUnitPriceCheck, allProducts.SelectUnitPrice());
-            Assert.AreEqual(SendKeysUnitsInStock, allProducts.SelectUnitsInStock());
-            Assert.AreEqual(SendKeysUnitsOnOrder, allProducts.SelectUnitsOnOrder());
-            Assert.AreEqual(SendKeysReorderLevel, allProducts.SelectReorderLevel());
-            Assert.AreEqual("True", allProducts.SelectDiscontinuedl()); // Проверка, что поставлена скидка
+            Assert.AreEqual(CheckNameAllProductsPage, allProducts.CheckNameAllProductsPage()); // Проверка загрузки нужной страницы "All Products"
+            Assert.AreEqual(SelectCategoryId, allProducts.CheckCategoryID());
+            Assert.AreEqual(SelectSupplierId, allProducts.CheckSupplierID());
+            Assert.AreEqual(SendKeysQuantityPerUnit, allProducts.CheckQuantityPerUnit());
+            Assert.AreEqual(SendKeysUnitPriceCheck, allProducts.CheckUnitPrice());
+            Assert.AreEqual(SendKeysUnitsInStock, allProducts.CheckUnitsInStock());
+            Assert.AreEqual(SendKeysUnitsOnOrder, allProducts.CheckUnitsOnOrder());
+            Assert.AreEqual(SendKeysReorderLevel, allProducts.CheckReorderLevel());
+            Assert.AreEqual("True", allProducts.CheckDiscontinuedl()); // Проверка, что поставлена скидка
 
         }
 

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDriverBasics", "WebDriverBasics.csproj", "{11693E95-42C6-4849-B5AD-25D22AF7F683}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PageObjects", "PageObjects.csproj", "{11693E95-42C6-4849-B5AD-25D22AF7F683}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

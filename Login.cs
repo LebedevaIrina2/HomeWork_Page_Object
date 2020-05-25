@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace WebDriverBasics
+namespace PageObjects
 {
     class Login
     {
@@ -14,7 +14,7 @@ namespace WebDriverBasics
             this.driver = driver;
         }
 
-        private IWebElement homepage => driver.FindElement(By.CssSelector("h2"));   // страница Login или Home Page
+        private IWebElement homepage => driver.FindElement(By.CssSelector("h2"));   // страница "Login" или "Home Page"
         private IWebElement logout => driver.FindElement(By.XPath("//a[text()='Logout']"));
 
         public string PageAutorization()

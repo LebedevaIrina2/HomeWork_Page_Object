@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace WebDriverBasics
+namespace PageObjects
 {
     class DeleteNewProduct
     {
@@ -14,17 +14,19 @@ namespace WebDriverBasics
             this.driver = driver;
         }
 
-        private IWebElement searchAllProducts => driver.FindElement(By.XPath("//a[contains(text(), 'All Products')]")); // ссылка "All Products"
+        private IWebElement AllProductsPage => driver.FindElement(By.XPath("//a[contains(text(), 'All Products')]")); // ссылка "All Products"
 
-        private IWebElement removeProduct => driver.FindElement(By.XPath("(//td/a[text()=\"King prawns\"]/..//following-sibling::td[10])"));
-
+        //private IWebElement removeNewProduct => driver.FindElement(By.XPath("(//td/a[text()=\"King prawns\"]/..//following-sibling::td[10])"));
+        private IWebElement NewProductName => driver.FindElement(By.CssSelector("King prawns"));
 
         public void RemoveProducts()
         {
-            new Actions(driver).Click(searchAllProducts).SendKeys(Keys.Enter).Build().Perform();
-            removeProduct.Click();            
-            driver.SwitchTo().Alert().Accept(); //Подтверждаем удаление в всплывающем окне предупреждения
-             //Thread.Sleep(500);
+            new Actions(driver).Click(AllProductsPage).SendKeys(Keys.Enter).Build().Perform();           
+            new Actions(driver).Click(NewProductName).SendKeys(Keys.Tab + Keys.Tab + Keys.Enter).Build().Perform(); // Кликаем по кнопке "remove"
+            driver.SwitchTo().Alert().Accept(); //Подтверждаем удаление в всплывающем окне предупреждения       
+
+            
+
 
 
         }

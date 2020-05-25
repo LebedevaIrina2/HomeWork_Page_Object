@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace WebDriverBasics
+namespace PageObjects
 {
     class NewProducts
     {
@@ -17,47 +17,45 @@ namespace WebDriverBasics
         }
 
 
-        private IWebElement searchAllProducts => driver.FindElement(By.XPath("//a[contains(text(), 'All Products')]")); // ссылка "All Products"
-        private IWebElement searchCreateNew => driver.FindElement(By.XPath("//a[contains(text(), 'Create new')]")); // Кнопка "создать новый продукт"
-        private IWebElement searchProductName => driver.FindElement(By.Id("ProductName")); // Поле ввода названия продукта
+        private IWebElement linkAllProducts => driver.FindElement(By.XPath("//a[contains(text(), 'All Products')]")); // ссылка "All Products"
+        private IWebElement buttonCreateNew => driver.FindElement(By.XPath("//a[contains(text(), 'Create new')]")); // Кнопка "создать новый продукт"
+        private IWebElement sendKeyProductName => driver.FindElement(By.Id("ProductName")); // Поле ввода названия продукта
         private IWebElement selectCategoryId => driver.FindElement(By.Id("CategoryId"));  // Поле выбора категории продукта        
         private IWebElement selectSupplierId => driver.FindElement(By.Id("SupplierId")); // Поле выбора поставщика...
-        private IWebElement searchUnitPrice => driver.FindElement(By.Id("UnitPrice"));
-        private IWebElement serachQuantityPerUnit => driver.FindElement(By.Id("QuantityPerUnit"));
-        private IWebElement searchUnitsInStock => driver.FindElement(By.Id("UnitsInStock"));
-        private IWebElement searchUnitsOnOrder => driver.FindElement(By.Id("UnitsOnOrder"));
-        private IWebElement searchReorderLevel => driver.FindElement(By.Id("ReorderLevel"));
-        private IWebElement searchDiscontinued => driver.FindElement(By.Id("Discontinued"));
-        private IWebElement searchButtonSend => driver.FindElement(By.XPath("//input[@type=\"submit\"]"));
-        private IWebElement productEditing => driver.FindElement(By.CssSelector("h2"));   // страница Product Editing
+        private IWebElement sendKeyUnitPrice => driver.FindElement(By.Id("UnitPrice"));
+        private IWebElement sendKeyQuantityPerUnit => driver.FindElement(By.Id("QuantityPerUnit"));
+        private IWebElement sendKeyUnitsInStock => driver.FindElement(By.Id("UnitsInStock"));
+        private IWebElement sendKeyUnitsOnOrder => driver.FindElement(By.Id("UnitsOnOrder"));
+        private IWebElement sendKeyReorderLevel => driver.FindElement(By.Id("ReorderLevel"));
+        private IWebElement checkboxDiscontinued => driver.FindElement(By.Id("Discontinued"));
+        private IWebElement buttonSend => driver.FindElement(By.XPath("//input[@type=\"submit\"]"));
+        private IWebElement productEditingPage => driver.FindElement(By.CssSelector("h2"));   // страница Product Editing
 
 
         // СОЗДАЕМ МЕТОДЫ
         public void CreateNewProductsName(string productDescription)  // Переходим по ссылкам All Products => Create New=> Создаем новое имя продукта
         {
-            searchAllProducts.Click();
-            searchCreateNew.Click();           
-            searchProductName.SendKeys(productDescription);
+            linkAllProducts.Click();
+            buttonCreateNew.Click();
+            sendKeyProductName.SendKeys(productDescription);
         }
-
+        public string CheckProductEditingPage() { return productEditingPage.Text; }
         public void SelectNewCategoryId(string productDescription) { new SelectElement(selectCategoryId).SelectByText(productDescription); } // Выбираем категорию для нового продукта...
         public void SelectNewSupplierId(string productDescription) { new SelectElement(selectSupplierId).SelectByText(productDescription); }
-        public void CreateNewUnitPrice(string productDescription) { searchUnitPrice.SendKeys(productDescription); }
-        public void CreateNewQuantityPerUnit(string productDescription) { serachQuantityPerUnit.SendKeys(productDescription); }
-        public void CreateNewUnitsInStock(string productDescription) { searchUnitsInStock.SendKeys(productDescription); }
-        public void CreateNewUnitsOnOrder(string productDescription) { searchUnitsOnOrder.SendKeys(productDescription); }
+        public void SendKeyNewUnitPrice(string productDescription) { sendKeyUnitPrice.SendKeys(productDescription); }
+        public void SendKeyNewQuantityPerUnit(string productDescription) { sendKeyQuantityPerUnit.SendKeys(productDescription); }
+        public void SendKeyNewUnitsInStock(string productDescription) { sendKeyUnitsInStock.SendKeys(productDescription); }
+        public void SendKeyNewUnitsOnOrder(string productDescription) { sendKeyUnitsOnOrder.SendKeys(productDescription); }
 
-        public AllProducts CreateNewReorderLevel(string productDescription) // + отмечаем скидку,нажимаем "отправить" и переходим на страницу AllProducts
-        {
-            //searchReorderLevel.SendKeys(productDescription);
-            new Actions(driver).Click(searchReorderLevel).SendKeys(productDescription).Build().Perform();
-
-            searchDiscontinued.Click();
+        public AllProductsPage SendKeyNewReorderLevel(string productDescription) // + отмечаем скидку,нажимаем "отправить" и переходим на страницу AllProducts
+        {            
+            new Actions(driver).Click(sendKeyReorderLevel).SendKeys(productDescription).Build().Perform();
+                       
+            new Actions(driver).Click(checkboxDiscontinued).Build().Perform();
           
-            //searchButtonSend.Click();
-            new Actions(driver).Click(searchButtonSend).SendKeys(Keys.Enter).Build().Perform();    
+            new Actions(driver).Click(buttonSend).SendKeys(Keys.Enter).Build().Perform();    
 
-            return new AllProducts(driver);
+            return new AllProductsPage(driver);
         }
 
     }

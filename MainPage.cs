@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace WebDriverBasics
+namespace PageObjects
 {
     class MainPage
     {
@@ -19,23 +19,18 @@ namespace WebDriverBasics
 
         private IWebElement sendKeyPassword => driver.FindElement(By.XPath("//input[@id=\"Password\"]")); // поле ввода пароля
 
-        private IWebElement ClickLoginButton => driver.FindElement(By.XPath("//input[@type='submit']")); // Кнопка "Отправить" Login
+        private IWebElement LoginButton => driver.FindElement(By.XPath("//input[@type='submit']")); // Кнопка "Отправить" Login
 
-        public void LoginEnter(string login)   //создаем метод для ввода логина
-        {
-            //sendKeyLogin.SendKeys(login);
-            new Actions(driver).Click(sendKeyLogin).SendKeys(login).Build().Perform();
-           
+        public void LoginEnter(string login)    //метод для ввода логина  
+        {           
+            new Actions(driver).Click(sendKeyLogin).SendKeys(login).Build().Perform();         
         }
 
-        public  Login PasswordAndAutorization(string password) //создаем метод для ввода пароля и клика по кнопке "Отправить" и возвр-м страницу Login
+        public  Login PasswordAndAutorization(string password) //создаем метод для ввода пароля, клика по кнопке "Отправить" и возвр-м страницу "Login"
         {
-            //sendKeyPassword.SendKeys(password);
-            //ClickLoginButton.Click();
+            new Actions(driver).Click(sendKeyPassword).SendKeys(password).Build().Perform(); // Вводим пароль
 
-            new Actions(driver).Click(sendKeyPassword).SendKeys(password).Build().Perform();
-
-            new Actions(driver).Click(ClickLoginButton).SendKeys(Keys.Enter).Build().Perform(); //Нажимаем кнопку "Отправить"
+            new Actions(driver).Click(LoginButton).SendKeys(Keys.Enter).Build().Perform(); //Нажимаем кнопку "Отправить"
 
 
             return new Login(driver);
