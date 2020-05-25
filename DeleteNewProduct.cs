@@ -23,6 +23,7 @@ namespace PageObjects
         {
             new Actions(driver).Click(AllProductsPage).SendKeys(Keys.Enter).Build().Perform();           
             new Actions(driver).Click(NewProductName).SendKeys(Keys.Tab + Keys.Tab + Keys.Enter).Build().Perform(); // Кликаем по кнопке "remove"
+            Thread.Sleep(500);
             driver.SwitchTo().Alert().Accept(); //Подтверждаем удаление в всплывающем окне предупреждения       
 
         }
