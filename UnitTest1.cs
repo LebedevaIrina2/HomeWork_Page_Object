@@ -88,6 +88,7 @@ namespace PageObjects
             newProducts.SendKeyNewUnitsInStock(SendKeysUnitsInStock);
             newProducts.SendKeyNewUnitsOnOrder(SendKeysUnitsOnOrder); // +отмечаем скидку и нажимаем кнопку "Отправить"
             allProducts= newProducts.SendKeyNewReorderLevel(SendKeysReorderLevel); // + отмечаем скидку,нажимаем "отправить" и переходим на страницу AllProducts
+            Assert.AreEqual(SendKeysProductName, newProducts.SearchLinkProductName(SendKeysProductName)); // Проверка успешного создания продукта.
         }
 
 
@@ -127,7 +128,8 @@ namespace PageObjects
             deleteNewProduct = new DeleteNewProduct(driver);
 
             deleteNewProduct.RemoveProducts (SendKeysProductName);
-                        
+            Assert.AreEqual(false ,  deleteNewProduct.isElementPresent(SendKeysProductName)); // Проверка успешного удаления продукта
+
         }
 
 
@@ -140,6 +142,7 @@ namespace PageObjects
 
 
             login.Logout(); //LOGOUT
+            login.CheckExitLogin(); // Проверка выхода из аккаунта. Подтверждение загрузки страницы  "Login"
                         
             mainPage.LoginEnter(SelectLogin); // заново вводим логин
             login = mainPage.PasswordAndAutorization(SelectLogin); // заново вводим пароль,  кликаем по кнопке "Отправить" и переходим на страницу HomePage

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -26,6 +27,7 @@ namespace PageObjects
         {
             logout.Click();            
         }
+        public string CheckExitLogin() { return homepage.Text; }
     }
 }
 

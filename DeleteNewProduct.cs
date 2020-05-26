@@ -25,9 +25,18 @@ namespace PageObjects
             new Actions(driver).Click(driver.FindElement(By.XPath($"//a[text()=\"{ProductName}\"]"))).SendKeys(Keys.Tab + Keys.Tab + Keys.Enter).Build().Perform(); // Кликаем по кнопке "remove"  // Переход по ссылке "All Products"         
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
-            driver.SwitchTo().Alert().Accept(); //Подтверждаем удаление в всплывающем окне предупреждения       
-
+            driver.SwitchTo().Alert().Accept(); //Подтверждаем удаление в всплывающем окне предупреждения   
         }
-
+        public Boolean isElementPresent(string ProductName)
+        {
+            try
+            {
+                return driver.FindElement(By.XPath($"//a[text()=\"{ProductName}\"]")).Displayed;
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -30,6 +30,9 @@ namespace PageObjects
         private IWebElement checkboxDiscontinued => driver.FindElement(By.Id("Discontinued"));
         private IWebElement buttonSend => driver.FindElement(By.XPath("//input[@type=\"submit\"]"));
         private IWebElement productEditingPage => driver.FindElement(By.CssSelector("h2"));   // страница Product Editing
+        
+
+
 
 
         // СОЗДАЕМ МЕТОДЫ
@@ -46,6 +49,11 @@ namespace PageObjects
         public void SendKeyNewQuantityPerUnit(string productDescription) { sendKeyQuantityPerUnit.SendKeys(productDescription); }
         public void SendKeyNewUnitsInStock(string productDescription) { sendKeyUnitsInStock.SendKeys(productDescription); }
         public void SendKeyNewUnitsOnOrder(string productDescription) { sendKeyUnitsOnOrder.SendKeys(productDescription); }
+        public string SearchLinkProductName(string ProductName)  
+        {
+            return driver.FindElement(By.XPath($"//a[text()=\"{ProductName}\"]")).Text;
+        }
+
 
         public AllProductsPage SendKeyNewReorderLevel(string productDescription) // + отмечаем скидку,нажимаем "отправить" и переходим на страницу AllProducts
         {            

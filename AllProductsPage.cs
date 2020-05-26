@@ -4,6 +4,7 @@ using OpenQA.Selenium.Interactions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace PageObjects
 {
@@ -17,6 +18,7 @@ namespace PageObjects
 
 
         private IWebElement linkAllProducts => driver.FindElement(By.XPath("//a[(text()=\"All Products\")]"));
+       
         
 
         public void SelectAllProducts() { linkAllProducts.Click(); } // Переход по ссылке All Products
@@ -36,6 +38,7 @@ namespace PageObjects
         public string CheckUnitsOnOrder() { return driver.FindElement(By.Id("UnitsOnOrder")).GetAttribute("value"); }
         public string CheckReorderLevel() { return driver.FindElement(By.Id("ReorderLevel")).GetAttribute("value"); }
         public string CheckDiscontinuedl() { return driver.FindElement(By.Id("Discontinued")).GetAttribute("value"); }
-                      
+
+                              
     }
 }
